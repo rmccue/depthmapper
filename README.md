@@ -50,6 +50,6 @@ mouse.
 * `r`: toggle view mode (full, wireframe, or point mode)
 
 ## Screenshots
-* http://cl.ly/2T0a352J1z2D12192K04
-* http://cl.ly/1d3h411r3C3S1m3O0n2l
-* http://cl.ly/0S3U0k153M3R0p2x2c0C
+* ![Screenshot 1](http://i.imgur.com/LwQkk.png)
+* ![Screenshot 2](http://i.imgur.com/0anhJ.png)
+* ![Screenshot 3](http://i.imgur.com/tbFsC.png)
