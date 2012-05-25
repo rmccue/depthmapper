@@ -124,8 +124,8 @@ class DisplayApplication(sf.Application):
 		"""Create the viewports to show on the screen"""
 		viewport = self.renderWindow.addViewport(self.camera)
 		viewport.backGroundColor = (1.0, 1.0, 1.0)
-		self.camera.aspectRatio = float(viewport.actualWidth) /
-			float(viewport.actualHeight)
+		self.camera.aspectRatio = float(viewport.actualWidth) \
+			/ viewport.actualHeight
 
 	def _createFrameListener(self):
 		"""Create the FrameListener"""
