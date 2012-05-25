@@ -47,23 +47,32 @@ class KinectRuntime(nui.Runtime):
 					continue
 
 				for curSkeleton in frame.SkeletonData:
-					if curSkeleton.eTrackingState != SkeletonTrackingState.NOT_TRACKED:
+					if curSkeleton.eTrackingState !=
+					SkeletonTrackingState.NOT_TRACKED:
 						self.skeleton_frame_ready.fire(frame)
 						break
 			elif wait == 1:
 				# depth event
-				depth_frame = self._nui.NuiImageStreamGetNextFrame(self.depth_stream._stream, 0)
+				depth_frame = self._nui.NuiImageStreamGetNextFrame(
+					self.depth_stream._stream, 0
+				)
 				self.depth_frame_ready.fire(depth_frame)
-				self._nui.NuiImageStreamReleaseFrame(self.depth_stream._stream, depth_frame)
+				self._nui.NuiImageStreamReleaseFrame(
+					self.depth_stream._stream, depth_frame
+				)
 			elif wait == 2:
 				# image event
-				depth_frame = self._nui.NuiImageStreamGetNextFrame(self.video_stream._stream, 0)
+				depth_frame = self._nui.NuiImageStreamGetNextFrame(
+					self.video_stream._stream, 0
+				)
 				self.video_frame_ready.fire(depth_frame)
-				self._nui.NuiImageStreamReleaseFrame(self.video_stream._stream, depth_frame)
+				self._nui.NuiImageStreamReleaseFrame(
+					self.video_stream._stream, depth_frame
+				)
 				pass
 			else:
-				# wait failed in some form (abandoned, timeout, or failed), this ends our loop
-				# when we close our events.
+				# wait failed in some form (abandoned, timeout, or failed), this
+				# ends our loop when we close our events.
 				break
 
 

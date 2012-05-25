@@ -69,7 +69,10 @@ class DisplayApplication(sf.Application):
 
 		light = sceneManager.createLight('PointLight')
 		light.type = ogre.Light.LT_POINT
-		center = {'x': (self.resolution[0] / 2) * self.spreadFactor, 'y': (self.resolution[1] / 2) * self.spreadFactor}
+		center = {
+			'x': (self.resolution[0] / 2) * self.spreadFactor,
+			'y': (self.resolution[1] / 2) * self.spreadFactor
+		}
 		light.position = (center['x'], center['y'], -0.8 * self.cameraStartZ)
 		light.diffuseColour = self.spotlightDiffuse
 		light.specularColour = self.spotlightSpecular
@@ -89,10 +92,17 @@ class DisplayApplication(sf.Application):
 			if i % self.displayModulo:
 				continue
 
-			entity = self.sceneManager.createEntity("Point{0}".format(i), "cube.mesh")
+			entity = self.sceneManager.createEntity("Point{0}".format(i),
+				"cube.mesh")
+
+			# This may not work, depending on the system setup
+			# It appears to be related to the graphics card used
 			color = z / float(self.maxDistance)
-			entity.getSubEntity(0).material.getTechnique(0).getPass(0).setDiffuse(color * 0.8, 1.0, 1.0, 1.0)
-			entity.getSubEntity(0).material.getTechnique(0).getPass(0).setSpecular(color, 1.0, 1.0, 1.0)
+			entity.getSubEntity(0).material.getTechnique(0).getPass(0)\
+				.setDiffuse(color * 0.8, 1.0, 1.0, 1.0)
+			entity.getSubEntity(0).material.getTechnique(0).getPass(0)\
+				.setSpecular(color, 1.0, 1.0, 1.0)
+
 			node = root_node.createChildSceneNode("Point{0}Node".format(i))
 			node.scale = (self.scaleFactor, self.scaleFactor, self.scaleFactor)
 			node.position = x, -y, z
@@ -101,7 +111,10 @@ class DisplayApplication(sf.Application):
 	def _createCamera(self):
 		"""Create the camera entity"""
 		self.camera = self.sceneManager.createCamera('PlayerCam')
-		center = {'x': (self.resolution[0] / 2) * self.spreadFactor, 'y': (self.resolution[1] / 2) * self.spreadFactor}
+		center = {
+			'x': (self.resolution[0] / 2) * self.spreadFactor,
+			'y': (self.resolution[1] / 2) * self.spreadFactor
+		}
 		self.camera.position = (center['x'], -center['y'], -self.cameraStartZ)
 		self.camera.lookAt((center['x'], -center['y'], 0))
 		self.camera.nearClipDistance = self.cameraClip
@@ -111,7 +124,8 @@ class DisplayApplication(sf.Application):
 		"""Create the viewports to show on the screen"""
 		viewport = self.renderWindow.addViewport(self.camera)
 		viewport.backGroundColor = (1.0, 1.0, 1.0)
-		self.camera.aspectRatio = float(viewport.actualWidth) / float(viewport.actualHeight)
+		self.camera.aspectRatio = float(viewport.actualWidth) /
+			float(viewport.actualHeight)
 
 	def _createFrameListener(self):
 		"""Create the FrameListener"""
@@ -123,6 +137,8 @@ class DisplayApplication(sf.Application):
 
 class FrameListener(sf.FrameListener):
 	"""Listener for events in the viewport"""
-	def __init__(self, renderWindow, camera, bufferedKeys=False, bufferedMouse=False, bufferedJoy=False):
-		sf.FrameListener.__init__(self, renderWindow, camera, bufferedKeys, bufferedMouse, bufferedJoy)
+	def __init__(self, renderWindow, camera, bufferedKeys=False,
+		bufferedMouse=False, bufferedJoy=False):
+		sf.FrameListener.__init__(self, renderWindow, camera, bufferedKeys,
+			bufferedMouse, bufferedJoy)
 		self.moveSpeed = 300
