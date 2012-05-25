@@ -25,5 +25,8 @@ if len(sys.argv) > 1:
 	filename = sys.argv[1]
 
 app = displayer.DisplayApplication()
-app.cloud = displayer.load(filename)
-app.go()
+try:
+	app.cloud = displayer.load(filename)
+	app.go()
+except IOError:
+	print "Given file does not exist"
