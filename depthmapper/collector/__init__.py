@@ -1,5 +1,5 @@
 """
-collector/__init__.py - Collector abstraction class
+collector/__init__.py - Collector abstraction module
 
 This class is used for future abstraction of Depthmapper from the
 Kinect hardware.
