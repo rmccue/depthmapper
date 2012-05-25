@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 bin/collector.py - Collector utility
 

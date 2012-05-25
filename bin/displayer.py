@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 bin/displayer.py - 3D data display utility
 
