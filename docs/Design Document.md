@@ -1,7 +1,7 @@
 # CSSE1001 Assignment 3 Design Document
 Name: Ryan McCue  
 Student Number: 42907510  
-Project Title: Depth Mapper
+Project Title: Depthmapper
 
 ## Description
 The aim of the project is to create two separate yet linked utilities to read
@@ -141,3 +141,12 @@ a user interface on startup. This is used for the interface in the displayer.
 [libfreenect]: http://openkinect.org/
 [Python-Ogre]: http://python-ogre.org/
 [Ogre3D]: http://www.ogre3d.org/
+
+
+## Licensing
+The project is licensed under the Internet Systems Consortium license. While BSD
+or MIT licenses are both equally good choices (and more well known), the [ISC
+license][] is much easier to understand from a user's perspective. The ISC
+license is used by a wide range of projects, including OpenBSD.
+
+[ISC license]: http://en.wikipedia.org/wiki/ISC_license
