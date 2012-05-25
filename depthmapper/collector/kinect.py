@@ -41,16 +41,8 @@ class KinectRuntime(nui.Runtime):
 			wait = nui._WaitForMultipleObjects(3, handles, False, nui._INFINITE)
 			if wait == 0:
 				# skeleton data
-				try:
-					frame = self._nui.NuiSkeletonGetNextFrame(0)
-				except KinectError:
-					continue
+				continue
 
-				for curSkeleton in frame.SkeletonData:
-					if curSkeleton.eTrackingState !=
-					SkeletonTrackingState.NOT_TRACKED:
-						self.skeleton_frame_ready.fire(frame)
-						break
 			elif wait == 1:
 				# depth event
 				depth_frame = self._nui.NuiImageStreamGetNextFrame(
