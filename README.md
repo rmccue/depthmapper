@@ -1,4 +1,9 @@
 # Depthmapper
+Depthmapper is a collection of utilities for using a Kinect's distance sensor.
+It contains utilites for collecting the data from the hardware and displaying
+this data in a 3D environment.
+
+This project is available from [GitHub](https://github.com/rmccue/depthmapper).
 
 ## Requirements
 * [Python](http://python.org/)
@@ -8,8 +13,9 @@
 * [PyKinect](http://pytools.codeplex.com/wikipage?title=PyKinect) (required for
   collector)
 
-  **Note:** PyKinect and the Kinect for Windows SDK are only available on
-  Windows.
+**Note:** PyKinect and the Kinect for Windows SDK are only available on
+Windows. Depthmapper was written in a Windows environment, so issues may arise
+when running on other platforms.
 
 ## Setup
 1. Install PyOgre and PyKinect
@@ -53,3 +59,10 @@ mouse.
 * ![Screenshot 1](http://i.imgur.com/LwQkk.png)
 * ![Screenshot 2](http://i.imgur.com/0anhJ.png)
 * ![Screenshot 3](http://i.imgur.com/tbFsC.png)
+
+## License
+Contains public domain code and media from the PyOgre project.
+
+Depthmapper is licensed under the
+[ISC license](http://en.wikipedia.org/wiki/ISC_license). See `LICENSE.md` for
+more information.

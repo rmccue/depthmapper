@@ -1,5 +1,11 @@
-# This code is in the Public Domain
-#
+"""
+SampleFramework.py - Application framework from the PyOgre demos
+
+Requires PyOgre from http://python-ogre.org/
+See README.md for installation requirements
+
+This code is in the Public Domain
+"""
 
 import ogre.renderer.OGRE as ogre
 

@@ -1,3 +1,10 @@
+"""
+utilities.py - Depthmapper utility/abstraction classes
+
+Copyright (c) 2012, Ryan McCue
+See LICENSE.md for copyright information
+"""
+
 import cPickle as pickle
 
 
@@ -13,6 +20,7 @@ class Point(object):
 		self.z = z
 
 	def get_coords(self):
+		"""Get the x, y, z coordinates for the point"""
 		return self.x, self.y, self.z
 
 	def __repr__(self):
@@ -50,6 +58,7 @@ class Timeline(object):
 	times = []
 
 	def set_cloud(self, time, cloud):
+		"""Set the cloud for the given time"""
 		self.timeline[time] = cloud
 		self.times.append(time)
 		self.times.sort()
@@ -93,6 +102,7 @@ class TimelineIterator(object):
 
 
 def load_timeline(filename):
+	"""Load a Timeline from a file"""
 	handle = open(filename, 'rb')
 	result = pickle.load(handle)
 	handle.close()
@@ -100,6 +110,7 @@ def load_timeline(filename):
 
 
 def save_timeline(timeline, filename):
+	"""Serialize and save a Timeline to a file"""
 	handle = open(filename, 'wb')
 	pickle.dump(timeline, handle, pickle.HIGHEST_PROTOCOL)
 	handle.close()

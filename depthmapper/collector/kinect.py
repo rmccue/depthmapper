@@ -1,49 +1,28 @@
- # ############################################################################
- #
- # Copyright (c) Microsoft Corporation.
- #
- # Available under the Microsoft PyKinect 1.0 Alpha license.  See LICENSE.txt
- # for more information.
- #
- # ###########################################################################/
+"""
+collector/kinect.py - Kinect data collection
+
+Requires PyKinect from http://pytools.codeplex.com/wikipage?title=PyKinect
+See README.md for installation requirements
+
+Copyright (c) 2012, Ryan McCue
+See LICENSE.md for copyright information
+"""
 
 import thread
 import ctypes
 
 from pykinect import nui
 
-import pygame
-from pygame.color import THECOLORS
-from pygame.locals import *
-
 from .. import utilities as utils
 
 from itertools import izip_longest
 import time
 
-KINECTEVENT = pygame.USEREVENT
 DEPTH_WINSIZE = 640, 480
 VIDEO_WINSIZE = 640, 480
 video_display = False
-pygame.init()
 
 timeline = utils.Timeline()
-
-
-# recipe to get address of surface:
-# http://archives.seul.org/pygame/users/Apr-2008/msg00218.html
-if hasattr(ctypes.pythonapi, 'Py_InitModule4'):
-	Py_ssize_t = ctypes.c_int
-elif hasattr(ctypes.pythonapi, 'Py_InitModule4_64'):
-	Py_ssize_t = ctypes.c_int64
-else:
-	raise TypeError("Cannot determine type of Py_ssize_t")
-
-_PyObject_AsWriteBuffer = ctypes.pythonapi.PyObject_AsWriteBuffer
-_PyObject_AsWriteBuffer.restype = ctypes.c_int
-_PyObject_AsWriteBuffer.argtypes = [ctypes.py_object,
-								ctypes.POINTER(ctypes.c_void_p),
-								ctypes.POINTER(Py_ssize_t)]
 
 
 class KinectRuntime(nui.Runtime):
@@ -99,6 +78,7 @@ def grouper(n, iterable, fillvalue=None):
 # Based on:
 # http://channel9.msdn.com/Series/KinectSDKQuickstarts/Working-with-Depth-Data
 def depth_frame_ready(frame):
+	"""Callback for the Kinect when the depth camera captures a new frame"""
 	with screen_lock:
 		cloud = utils.PointCloud()
 		x = 1
@@ -122,28 +102,8 @@ def depth_frame_ready(frame):
 		timeline.set_cloud(frame.timestamp, cloud)
 
 
-def surface_to_array(surface):
-	buffer_interface = surface.get_buffer()
-	address = ctypes.c_void_p()
-	size = Py_ssize_t()
-	_PyObject_AsWriteBuffer(buffer_interface,
-							ctypes.byref(address), ctypes.byref(size))
-	bytes = (ctypes.c_byte * size.value).from_address(address.value)
-	bytes.object = buffer_interface
-	return bytes
-
-
-def gui_depth_ready(frame):
-	with screen_lock:
-		address = surface_to_array(screen)
-		#print dir(frame.image.bits)
-		frame.image.copy_bits(address)
-		#ctypes.memmove(address, frame.image.bits, len(address))
-		del address
-		pygame.display.update()
-
-
 def get_point_cloud():
+	"""Get the latest point cloud collected from the data"""
 	last = None
 	while not last:
 		time.sleep(3)
@@ -153,6 +113,7 @@ def get_point_cloud():
 
 
 def initialize():
+	"""Setup the Kinect hardware and register callbacks"""
 	global screen_lock, screen, kinect
 	screen_lock = thread.allocate()
 
@@ -168,51 +129,10 @@ def initialize():
 
 
 def uninitialize():
+	"""Shutdown the Kinect hardware"""
 	global kinect
 	with screen_lock:
 		# Wait a second to ensure that everything is cleaned up
 		kinect.stop_thread()
 		time.sleep(1)
 		kinect.close()
-
-
-def setup_gui():
-	global screen
-	screen = pygame.display.set_mode(DEPTH_WINSIZE, 0, 16)
-	pygame.display.set_caption('Python Kinect Demo')
-	screen.fill(THECOLORS["black"])
-
-	kinect.depth_frame_ready += gui_depth_ready
-
-
-def gui_loop():
-	global screen
-
-	print('Controls: ')
-	print(' u - Increase elevation angle')
-	print(' j - Decrease elevation angle')
-	print(' x - Reset elevation angle')
-
-	# main game loop
-	done = False
-
-	while not done:
-		e = pygame.event.wait()
-		if e.type == pygame.QUIT:
-			done = True
-			break
-		elif e.type == KEYDOWN:
-			if e.key == K_ESCAPE:
-				done = True
-				break
-			elif e.key == K_u:
-				kinect.camera.elevation_angle = kinect.camera.elevation_angle + 2
-			elif e.key == K_j:
-				kinect.camera.elevation_angle = kinect.camera.elevation_angle - 2
-			elif e.key == K_x:
-				kinect.camera.elevation_angle = 2
-
-if __name__ == "__main__":
-	initialize()
-	setup_gui()
-	gui_loop()
